@@ -1,8 +1,8 @@
-## Functions that allow caching matrix inverse until the matrix changes,
-## without any additional bookkeeping from a user.
+## Functions that define wrapper around a matrix to allow caching matrix inverse
+## until the matrix changes, without any additional bookkeeping from a user.
 
-## Returns a list of functions that allow changing/retrieving given matrix
-## and its inverse.
+## Wraps given matrix in an object that can cache inverse of the matrix and
+## exposes functions to operate on the matrix and its inverse.
 ## `get` returns the matrix
 ## `set` sets matrix and invalidates cache
 ## `setinv` saves given matrix as inverse
@@ -25,8 +25,10 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Returns inverse of a matrix x (assumes non-singularity) from cache if saved
-## and x didn't change since computation. Otherwise recomputes inverse and saves it.
+## Returns an inverse of a matrix (assumes non-singularity)
+## that is stored inside the wrapper x.
+## Retrieves cached inverse if it was computed and matrix didn't change since.
+## Otherwise recomputes inverse and saves it in the wrapper.
 
 cacheSolve <- function(x, ...) {
     inv <- x$getinv()
